@@ -8,9 +8,9 @@ const CreateTask = ({ token, onTaskCreated }) => {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      const result = await createTask(token, 'test@gmail.com', title);
-      onTaskCreated(result);
-      setTitle('');
+      await createTask(token, "test@gmail.com", title);
+      setTitle('');  
+      onTaskCreated();  
     } catch (err) {
       setError('Error to create task');
     }
