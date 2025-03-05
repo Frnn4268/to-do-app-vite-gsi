@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { getTaskById } from '../services/api';
+import { getTaskById } from '../services/apiClient';
 import { useParams, Link } from 'react-router-dom';
 
 const TaskDetail = ({ token }) => {
   const { taskId } = useParams();  
   const [task, setTask] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchTask = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const taskData = await getTaskById(token, taskId);
+      if (!taskData) {
+        throw new Error('No task information received');
+      }
       setTask(taskData);
     } catch (err) {
-      setError('Error to obtain task details');
+      console.error('Error fetching task detail:', err);
+      setError(err.message || 'Error getting task details');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -22,8 +31,16 @@ const TaskDetail = ({ token }) => {
     }
   }, [token, taskId]);
 
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
-  if (!task) return <p>Loading details...</p>;
+  if (loading) return <p>Loading details...</p>;
+
+  if (error) return (
+    <div>
+      <p style={{ color: 'red' }}>{error}</p>
+      <button onClick={fetchTask}>Retry</button>
+    </div>
+  );
+
+  if (!task) return <p>No task found.</p>;
 
   return (
     <div>
