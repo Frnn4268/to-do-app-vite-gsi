@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getTasks } from '../services/api';
 import TaskItem from './TaskItem';
+import CreateTask from './CreateTask';
 
 const TaskList = ({ token }) => {
   const [tasks, setTasks] = useState([]);
@@ -21,26 +22,21 @@ const TaskList = ({ token }) => {
     if (token) fetchTasks();
   }, [token]);
 
-  const handleTaskUpdated = (updatedTaskId) => {
-    fetchTasks();
-  };
-
-  const handleTaskDeleted = (deletedTaskId) => {
-    fetchTasks();
-  };
-
   return (
     <div>
       <h2>Task List</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <CreateTask token={token} onTaskCreated={fetchTasks} />
+
       <ul>
         {tasks.map(task => (
           <TaskItem 
             key={task.id} 
             token={token} 
             task={task} 
-            onTaskUpdated={handleTaskUpdated}
-            onTaskDeleted={handleTaskDeleted}
+            onTaskUpdated={fetchTasks} 
+            onTaskDeleted={fetchTasks} 
           />
         ))}
       </ul>
