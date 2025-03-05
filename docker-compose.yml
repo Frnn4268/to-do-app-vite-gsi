@@ -1,0 +1,17 @@
+services:
+  client-react-vite:
+    image: client-react-vite
+    build:
+      context: .  
+      dockerfile: Dockerfile
+    init: true
+    volumes:
+      - ./vite.config.js:/usr/src/app/vite.config.js
+    networks:
+      - frontend
+    ports:
+      - 5173:5173
+    restart: unless-stopped
+
+networks:
+  frontend:
