@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import TaskList from './components/TaskList';
@@ -6,7 +6,20 @@ import CreateTask from './components/CreateTask';
 import TaskDetail from './components/TaskDetail';
 
 const App = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('authToken') || null);
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('authToken', token);
+    } else {
+      localStorage.removeItem('authToken');
+    }
+  }, [token]);
+
+  const handleLogout = () => {
+    setToken(null);
+    localStorage.removeItem('authToken'); 
+  };
 
   return (
     <BrowserRouter>
@@ -17,6 +30,7 @@ const App = () => {
         ) : (
           <>
             <p>Autenticado</p>
+            <button onClick={handleLogout}>Logout</button> {/* Botón de Logout */}
             <Routes>
               <Route 
                 path="/" 
