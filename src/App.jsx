@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import TaskList from './components/TaskList';
-import CreateTask from './components/CreateTask';
 import TaskDetail from './components/TaskDetail';
 
 const App = () => {
@@ -29,17 +28,12 @@ const App = () => {
           <Login setAuthToken={setToken} />
         ) : (
           <>
-            <p>Autenticado</p>
-            <button onClick={handleLogout}>Logout</button> {/* Botón de Logout */}
+            <p>Authenticated</p>
+            <button onClick={handleLogout}>Logout</button> 
             <Routes>
               <Route 
                 path="/" 
-                element={
-                  <>
-                    <CreateTask token={token} onTaskCreated={() => {}} />
-                    <TaskList token={token} />
-                  </>
-                } 
+                element={<TaskList token={token} />} 
               />
               <Route 
                 path="/task/:taskId" 
