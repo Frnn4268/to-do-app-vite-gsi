@@ -180,7 +180,6 @@ To run the application using the ***Makefile***, you can use the following comma
 
 - Users authenticate using their email.
 - A token is required for protected API endpoints.
-- JWT used in this project.
 
 ## Testing with Postman Collection
 
