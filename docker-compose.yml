@@ -1,17 +1,24 @@
+version: '3.8'
+
 services:
   client-react-vite:
+  # Define the service using the specified image name
     image: client-react-vite
+    # Build configuration for the service
     build:
       context: .  
       dockerfile: Dockerfile
     init: true
+    # Volume mapping for configuration files
     volumes:
       - ./vite.config.js:/usr/src/app/vite.config.js
     networks:
       - frontend
+    # Port mapping to expose the application on the host
     ports:
       - 5173:5173
     restart: unless-stopped
 
+# Define the custom network 'frontend'
 networks:
   frontend:
