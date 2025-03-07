@@ -15,7 +15,7 @@ import TaskItem from '../../../components/tasks/TaskItem/TaskItem';
 import TaskListCard from '../../common/cards/TaskListCard';
 import PaginationControls from '../../common/pagination/PaginationControls';
 import LoadingSpinner from '../../common/loading/LoadingSpinner';
-import ErrorAlert from '../../common/alerts/ErrorAlert';
+import ErrorAlertList from '../../common/alerts/ErrorAlertList';
 import EmptyState from '../../common/alerts/EmptyState';
 
 /**
@@ -81,7 +81,7 @@ const TaskList = ({ token }) => {
   return (
     <div className="task-list-container mt-5">
       {/* Error message with retry option */}
-      {error && <ErrorAlert error={error} onRetry={fetchTasks} />}
+      {error && <ErrorAlertList error={error} onRetry={fetchTasks} />}
 
       {/* Loading spinner while fetching tasks */}
       {loading && <LoadingSpinner message="Cargando tus tareas..." />}
